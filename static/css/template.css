@@ -49,3 +49,13 @@ h1
   overflow: hidden;
   background-color: #f1f1f1;
 }
+.cat_name
+{
+  display: flex;
+  flex-flow: row wrap;
+  align-items: center;
+}
+.cat_name p
+{
+  margin: 5px 10px 5px 0;
+}
