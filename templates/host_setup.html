@@ -1,0 +1,47 @@
+<!DOCTYPE html>
+<html lang="en" dir="ltr">
+  <head>
+    <meta charset="utf-8">
+    <title>Host Setup</title>
+    <link rel="stylesheet" href="{{ url_for('static',    filename='css/template.css') }}">
+  </head>
+  <body>
+    {% block content %}
+    <h2>Choose Game Mode Settings</h2>
+    <button class="button" type="button">Jeopardy</button>
+    <div class="content_jeo">
+      <form action="{{ url_for('host_setup') }}"  method= "post">
+        <p>Enter Name:</p>
+        <p><input type = "text" name = "nm" /></p>
+        <p><input type = "submit" value = "submit" /></p>
+      </form>
+    </div>
+    <button class="button" type="button">Double Jeopardy</button>
+    <div class="content_djeo">
+      <p>hello</p>
+    </div>
+    <button class="button" type="button">Final Jeopardy</button>
+    <div class="content_fjeo">
+      <p>hello</p>
+    </div>
+    <hr>
+    <script>
+        var coll = document.getElementsByClassName("button");
+        var i;
+        for (i = 0; i < coll.length; i++) {
+            coll[i].addEventListener("click", function() {
+                this.classList.toggle("active");
+                var content = this.nextElementSibling;
+                if (content.style.display === "block") {
+                  content.style.display = "none";
+                }
+                else {
+                  content.style.display = "block";
+                }
+              });
+            }
+    </script>
+    {% endblock %}
+
+  </body>
+</html>
