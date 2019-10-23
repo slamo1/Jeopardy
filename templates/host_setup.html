@@ -7,301 +7,80 @@
   </head>
   <body>
     {% block content %}
-    <h2>Choose Game Mode Settings</h2>
+    <h1>Choose Game Mode Settings</h1>
     <button class="button" type="button">Jeopardy</button>
     <div class="content_jeo">
       <form action="{{ url_for('host_setup') }}"  method= "post">
-        <ul>
+        {% for category in categories %}
+
           <ul class="cat_row">
               <ul>
-                <p>Catagory One     <input type = "text" name = "c1" /></p>
+                <p>Category {{ category }}     <input type = "text" name = "c{{ category }}" /></p>
               </ul>
             <ul>
               <h3>Questions</h3>
+              {% for value in jeopardy %}
               <ul>
-                <p>$100 <input type = "text" name = "c1-1" /></p>
+                <p>${{ value }} <input type = "text" name = "c{{ category }}-{{ value }}" /></p>
               </ul>
-              <ul>
-                <p>$200 <input type = "text" name = "c1-2" /></p>
-              </ul>
-              <ul>
-                <p>$300 <input type = "text" name = "c1-3" /></p>
-              </ul>
-              <ul>
-                <p>$400 <input type = "text" name = "c1-4" /></p>
-              </ul>
-              <ul>
-                <p>$500 <input type = "text" name = "c1-5" /></p>
-              </ul>
-              <ul>
-                <p>$600 <input type = "text" name = "c1-6" /></p>
-              </ul>
+              {% endfor %}
             </ul>
             <ul>
               <h3>Answers</h3>
+              {% for value in jeopardy %}
               <ul>
-                <input type = "text" name = "nm" /></p>
+                <p> <input type = "text" name = "nm{{ category }}-{{ value }}" /></p>
               </ul>
-              <ul>
-                <input type = "text" name = "nm" /></p>
-              </ul>
-              <ul>
-                <input type = "text" name = "nm" /></p>
-              </ul>
-              <ul>
-                <input type = "text" name = "nm" /></p>
-              </ul>
-              <ul>
-                <input type = "text" name = "nm" /></p>
-              </ul>
-              <ul>
-                <input type = "text" name = "nm" /></p>
-              </ul>
+              {% endfor %}
             </ul>
           </ul>
           <hr>
-          <ul class="cat_row">
-                <ul>
-                  <p>Catagory Two     <input type = "text" name = "c1" /></p>
-                </ul>
-              <ul>
-                <ul>
-                  <p>$100 <input type = "text" name = "nm" /></p>
-                </ul>
-                <ul>
-                  <p>$200 <input type = "text" name = "nm" /></p>
-                </ul>
-                <ul>
-                  <p>$300 <input type = "text" name = "nm" /></p>
-                </ul>
-                <ul>
-                  <p>$400 <input type = "text" name = "nm" /></p>
-                </ul>
-                <ul>
-                  <p>$500 <input type = "text" name = "nm" /></p>
-                </ul>
-                <ul>
-                  <p>$600 <input type = "text" name = "nm" /></p>
-                </ul>
-              </ul>
-              <ul>
-                <ul>
-                  <input type = "text" name = "nm" /></p>
-                </ul>
-                <ul>
-                  <input type = "text" name = "nm" /></p>
-                </ul>
-                <ul>
-                  <input type = "text" name = "nm" /></p>
-                </ul>
-                <ul>
-                  <input type = "text" name = "nm" /></p>
-                </ul>
-                <ul>
-                  <input type = "text" name = "nm" /></p>
-                </ul>
-                <ul>
-                  <input type = "text" name = "nm" /></p>
-                </ul>
-              </ul>
-            </ul>
-            <hr>
-            <ul class="cat_row">
-                <ul>
-                  <p>Catagory Three <input type = "text" name = "c1" /></p>
-                </ul>
-              <ul>
-                <ul>
-                  <p>$100 <input type = "text" name = "nm" /></p>
-                </ul>
-                <ul>
-                  <p>$200 <input type = "text" name = "nm" /></p>
-                </ul>
-                <ul>
-                  <p>$300 <input type = "text" name = "nm" /></p>
-                </ul>
-                <ul>
-                  <p>$400 <input type = "text" name = "nm" /></p>
-                </ul>
-                <ul>
-                  <p>$500 <input type = "text" name = "nm" /></p>
-                </ul>
-                <ul>
-                  <p>$600 <input type = "text" name = "nm" /></p>
-                </ul>
-              </ul>
-              <ul>
-                <ul>
-                  <input type = "text" name = "nm" /></p>
-                </ul>
-                <ul>
-                  <input type = "text" name = "nm" /></p>
-                </ul>
-                <ul>
-                  <input type = "text" name = "nm" /></p>
-                </ul>
-                <ul>
-                  <input type = "text" name = "nm" /></p>
-                </ul>
-                <ul>
-                  <input type = "text" name = "nm" /></p>
-                </ul>
-                <ul>
-                  <input type = "text" name = "nm" /></p>
-                </ul>
-              </ul>
-            </ul>
-            <hr>
-            <ul class="cat_row">
-                <ul>
-                  <p>Catagory Four   <input type = "text" name = "c1" /></p>
-                </ul>
-              <ul>
-                <ul>
-                  <p>$100 <input type = "text" name = "nm" /></p>
-                </ul>
-                <ul>
-                  <p>$200 <input type = "text" name = "nm" /></p>
-                </ul>
-                <ul>
-                  <p>$300 <input type = "text" name = "nm" /></p>
-                </ul>
-                <ul>
-                  <p>$400 <input type = "text" name = "nm" /></p>
-                </ul>
-                <ul>
-                  <p>$500 <input type = "text" name = "nm" /></p>
-                </ul>
-                <ul>
-                  <p>$600 <input type = "text" name = "nm" /></p>
-                </ul>
-              </ul>
-              <ul>
-                <ul>
-                  <input type = "text" name = "nm" /></p>
-                </ul>
-                <ul>
-                  <input type = "text" name = "nm" /></p>
-                </ul>
-                <ul>
-                  <input type = "text" name = "nm" /></p>
-                </ul>
-                <ul>
-                  <input type = "text" name = "nm" /></p>
-                </ul>
-                <ul>
-                  <input type = "text" name = "nm" /></p>
-                </ul>
-                <ul>
-                  <input type = "text" name = "nm" /></p>
-                </ul>
-              </ul>
-            </ul>
-            <hr>
-            <ul class="cat_row">
-                <ul>
-                  <p>Catagory Five   <input type = "text" name = "c1" /></p>
-                </ul>
-              <ul>
-                <ul>
-                  <p>$100 <input type = "text" name = "nm" /></p>
-                </ul>
-                <ul>
-                  <p>$200 <input type = "text" name = "nm" /></p>
-                </ul>
-                <ul>
-                  <p>$300 <input type = "text" name = "nm" /></p>
-                </ul>
-                <ul>
-                  <p>$400 <input type = "text" name = "nm" /></p>
-                </ul>
-                <ul>
-                  <p>$500 <input type = "text" name = "nm" /></p>
-                </ul>
-                <ul>
-                  <p>$600 <input type = "text" name = "nm" /></p>
-                </ul>
-              </ul>
-              <ul>
-                <ul>
-                  <input type = "text" name = "nm" /></p>
-                </ul>
-                <ul>
-                  <input type = "text" name = "nm" /></p>
-                </ul>
-                <ul>
-                  <input type = "text" name = "nm" /></p>
-                </ul>
-                <ul>
-                  <input type = "text" name = "nm" /></p>
-                </ul>
-                <ul>
-                  <input type = "text" name = "nm" /></p>
-                </ul>
-                <ul>
-                  <input type = "text" name = "nm" /></p>
-                </ul>
-              </ul>
-            </ul>
-            <hr>
-            <ul class="cat_row">
-                <ul>
-                  <p>Catagory Six     <input type = "text" name = "c1" /></p>
-                </ul>
-              <ul>
-                <ul>
-                  <p>$100 <input type = "text" name = "nm" /></p>
-                </ul>
-                <ul>
-                  <p>$200 <input type = "text" name = "nm" /></p>
-                </ul>
-                <ul>
-                  <p>$300 <input type = "text" name = "nm" /></p>
-                </ul>
-                <ul>
-                  <p>$400 <input type = "text" name = "nm" /></p>
-                </ul>
-                <ul>
-                  <p>$500 <input type = "text" name = "nm" /></p>
-                </ul>
-                <ul>
-                  <p>$600 <input type = "text" name = "nm" /></p>
-                </ul>
-              </ul>
-              <ul>
-                <ul>
-                  <input type = "text" name = "nm" /></p>
-                </ul>
-                <ul>
-                  <input type = "text" name = "nm" /></p>
-                </ul>
-                <ul>
-                  <input type = "text" name = "nm" /></p>
-                </ul>
-                <ul>
-                  <input type = "text" name = "nm" /></p>
-                </ul>
-                <ul>
-                  <input type = "text" name = "nm" /></p>
-                </ul>
-                <ul>
-                  <input type = "text" name = "nm" /></p>
-                </ul>
-              </ul>
-            </ul>
-          </ul>
+          {% endfor %}
+
         <p><input type = "submit" value = "Save" /></p>
       </form>
     </div>
+
     <button class="button" type="button">Double Jeopardy</button>
     <div class="content_djeo">
-      <p>hello</p>
+      <form action="{{ url_for('host_setup') }}"  method= "post">
+        {% for category in categories %}
+
+          <ul class="cat_row">
+              <ul>
+                <p>Category {{ category }}     <input type = "text" name = "c{{ category }}" /></p>
+              </ul>
+            <ul>
+              <h3>Questions</h3>
+              {% for value in double_jeopardy %}
+              <ul>
+                <p>${{ value }} <input type = "text" name = "c{{ category }}-{{ value }}" /></p>
+              </ul>
+              {% endfor %}
+            </ul>
+            <ul>
+              <h3>Answers</h3>
+              {% for value in double_jeopardy %}
+              <ul>
+                <p> <input type = "text" name = "nm{{ category }}-{{ value }}" /></p>
+              </ul>
+              {% endfor %}
+            </ul>
+          </ul>
+          <hr>
+          {% endfor %}
+
+        <p><input type = "submit" value = "Save" /></p>
+      </form>
     </div>
     <button class="button" type="button">Final Jeopardy</button>
     <div class="content_fjeo">
       <p>hello</p>
     </div>
     <hr>
+    <form action="{{ url_for('home') }}" method="post">
+      <input type="submit" value="submit" />
+    </form>
     <script>
         var coll = document.getElementsByClassName("button");
         var i;

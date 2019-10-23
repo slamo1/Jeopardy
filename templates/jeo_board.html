@@ -1,0 +1,26 @@
+<!DOCTYPE html>
+<html lang="en" dir="ltr">
+  <head>
+    <meta charset="utf-8">
+    <title>Jeopardy Game</title>
+    <link rel="stylesheet" href="{{ url_for('static',    filename='css/template.css') }}">
+  </head>
+  <body>
+    {% block content %}
+    <table class="yea_ble">
+      <tr>
+        {% for values in categories %}
+        <th>{{values}}</th>
+        {% endfor %}
+      </tr>
+      {% for value in increments %}
+      <tr>
+        {% for i in range(6) %}
+        <td><a href="{{ url_for('answer_page')}}"><button class="jeo_button" type="button">${{value}}</button></a></td>
+        {% endfor %}
+      </tr>
+      {% endfor %}
+    </table>
+    {% endblock %}
+  </body>
+</html>
