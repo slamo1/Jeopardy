@@ -9,14 +9,14 @@
     {% block content %}
     <table class="yea_ble">
       <tr>
-        {% for values in categories %}
-        <th>{{values}}</th>
+        {% for category in categories %}
+        <th>{{ category }}</th>
         {% endfor %}
       </tr>
       {% for value in increments %}
       <tr>
         {% for i in range(6) %}
-        <td><a href="{{ url_for('answer_page')}}"><button class="jeo_button" type="button">${{value}}</button></a></td>
+        <td><a href="{{ url_for('answer_page', category=i, value=value) }}"><button class="jeo_button" type="button">${{value}}</button></a></td>
         {% endfor %}
       </tr>
       {% endfor %}
