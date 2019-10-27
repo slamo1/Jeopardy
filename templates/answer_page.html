@@ -3,12 +3,27 @@
   <head>
     <meta charset="utf-8">
     <title>Jeopardy Game</title>
-    
-    <link rel="stylesheet" href="{{ url_for('static',    filename='css/template.css') }}">
+
+    <link rel="stylesheet" href="{{ url_for('static',    filename='css/answer_doc.css') }}">
   </head>
   <body>
     {% block content %}
-    You have selected category number {{ category }}, with value {{ value }}
+    <button class="start_button" type="button">GO!</button>
+    <div class="flip-card">
+      <div class="flip-card-inner">
+        <div class="flip-card-front">
+          <h1>Question</h1>
+          <p>{{ question }} </p>
+        </div>
+        <div class="flip-card-back">
+          <h1>Answer</h1>
+          <p>{{ answer }} </p>
+        </div>
+      </div>
+    </div>
+    <div>
+      <button class="jeo_button" type="button">Back to Board</button>
+    </div>
     {% endblock %}
   </body>
 </html>
