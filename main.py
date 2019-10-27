@@ -46,11 +46,10 @@ def host_setup():
                 increments.append(val)
                 que_str = "c"+ str(i+1) + "-" + str(val)
                 ans_str = "nm" + str(i+1) + "-" + str(val)
-                jeop_board[val] = [request.form.get(que_str), request.form.get(ans_str)]
+                jeop_board[val] = [request.form.get(que_str), request.form.get(ans_str), 1]
             master.append(jeop_board)
                 #questions.append(request.form.get(que_str))
                 #answers.append(request.form.get(ans_str))
-        print(master)
         increments = list(range(start_amount, stop_amount, increment))
         session['jeopardy'] = master
         session['categories'] = categories
@@ -62,15 +61,22 @@ def host_setup():
 @app.route("/jeopardy_board", methods=['GET', 'POST'])
 def jeopardy_form_post():
     return render_template("jeo_board.html", categories=session['categories'], \
-            increments=session['increments'])
+            increments=session['increments'], board=session['jeopardy'])
 
 
 
 @app.route("/answer_page/<category>/<value>")
 def answer_page(category, value):
     category = int(category)
-    question = session['jeopardy'][category][value][0]
-    answer = session['jeopardy'][category][value][1]
+    
+    # Pop out and update the board
+    jeopardy_board = session.pop('jeopardy')
+    question = jeopardy_board[category][value][0]
+    answer = jeopardy_board[category][value][1]
+    jeopardy_board[category][value][2] = 0
+
+    session['jeopardy'] = jeopardy_board
+
     return render_template("answer_page.html", question=question, answer=answer)
 
 
