@@ -1,6 +1,5 @@
 .flip-card {
-  margin-left: 30%;
-  margin-top: 40px;
+  margin-left: 45%;
   background-color: transparent;
   width: 600px;
   height: 500px;
@@ -33,13 +32,28 @@
 
 /* Style the front side (fallback if image is missing) */
 .flip-card-front {
-  background-color: #bbb;
+  background-color: gray;
   color: black;
 }
+
 
 /* Style the back side */
 .flip-card-back {
   background-color: dodgerblue;
   color: white;
   transform: rotateY(180deg);
+}
+div.inline {
+   float:left;
+   margin-top: 30px
+ }
+.start_button{
+    width: 100px;
+    height: 100px;
+    margin-top: 200px;
+    margin-left: 350px;
+}
+p {
+  text-align: center;
+  font-size: 60px; 
 }

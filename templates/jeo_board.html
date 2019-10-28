@@ -21,6 +21,17 @@
       </tr>
       {% endfor %}
     </table>
+    <table class="score_board">
+      <tr>
+        {% for i in range(3) %}
+        <th class="team_name">TeamName</th>
+        {% endfor %}
+      </tr>
+      <tr>
+        {% for n in range(3) %}
+        <td class="scores">Score</td>
+        {% endfor %}
+    </table>
     {% endblock %}
   </body>
 </html>

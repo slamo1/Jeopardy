@@ -8,22 +8,40 @@
   </head>
   <body>
     {% block content %}
-    <button class="start_button" type="button">GO!</button>
-    <div class="flip-card">
-      <div class="flip-card-inner">
-        <div class="flip-card-front">
-          <h1>Question</h1>
-          <p>{{ question }} </p>
-        </div>
-        <div class="flip-card-back">
-          <h1>Answer</h1>
-          <p>{{ answer }} </p>
+    <div class="inline">
+      <p id='timer'>Hi</p>
+    </div>
+    <div class="inline">
+      <div class="flip-card">
+        <div class="flip-card-inner">
+          <div class="flip-card-front" id='c'>
+            <h1>Question</h1>
+            <p>{{ question }} </p>
+          </div>
+          <div class="flip-card-back">
+            <h1>Answer</h1>
+            <p>{{ answer }} </p>
+          </div>
         </div>
       </div>
     </div>
-    <div>
-      <button class="jeo_button" type="button">Back to Board</button>
+    <div class="inline">
+      <button class="start_button" id='a' type="button" onclick="setColor('c')">GO!</button>
     </div>
+    <script>
+    var count = 1;
+    function setColor(btn) {
+        var property = document.getElementById(btn);
+        if (count == 0) {
+            property.style.backgroundColor = "gray"
+            count = 1;
+        }
+        else {
+            property.style.backgroundColor = "green"
+            count = 0;
+        }
+    }
+    </script>
     {% endblock %}
   </body>
 </html>
