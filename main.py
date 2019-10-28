@@ -22,30 +22,27 @@ def host_setup():
     start_amount = 100
     stop_amount = 700
     increment = 100
+    jeopardy = range(start_amount, stop_amount, increment)
+    double_jeopardy = range(2*start_amount, 2*stop_amount, 2*increment)
 
     if request.method == 'GET':
-
-        jeopardy = range(start_amount, stop_amount, increment)
-        double_jeopardy = range(2*start_amount, 2*stop_amount, 2*increment)
-
         return render_template("host_setup.html", categories=categories, \
             jeopardy=jeopardy, double_jeopardy=double_jeopardy)
 
     if request.method == "POST":
-        categories = []
+        category_strings = []
         increments = []
 
         master = []
-        for i in range(6):
-            cat_str ="c"+ str(i+1)
-            categories.append(request.form.get(cat_str))
+        for i in categories:
+            cat_str ="c"+ str(i)
+            category_strings.append(request.form.get(cat_str))
 
             jeop_board = {}
-            for n in range(6):
-                val = (n+1)*100
+            for val in jeopardy:
                 increments.append(val)
-                que_str = "c"+ str(i+1) + "-" + str(val)
-                ans_str = "nm" + str(i+1) + "-" + str(val)
+                que_str = "c"+ str(i) + "-" + str(val)
+                ans_str = "nm" + str(i) + "-" + str(val)
                 jeop_board[val] = [request.form.get(que_str), request.form.get(ans_str)]
             master.append(jeop_board)
                 #questions.append(request.form.get(que_str))
@@ -53,7 +50,7 @@ def host_setup():
         print(master)
         increments = list(range(start_amount, stop_amount, increment))
         session['jeopardy'] = master
-        session['categories'] = categories
+        session['categories'] = category_strings
         session['increments'] = increments
 
         return redirect(url_for('jeopardy_form_post'))
