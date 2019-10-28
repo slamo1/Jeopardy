@@ -8,7 +8,7 @@
   <body>
     {% block content %}
     <h1>Choose Game Mode Settings</h1>
-    <button class="button" type="button">Jeopardy</button>
+    <button class="button" type="button">Enter Questions</button>
     <div class="content_jeo">
       <form action="{{ url_for('host_setup') }}"  method= "post">
         {% for category in categories %}
@@ -41,46 +41,8 @@
       </form>
     </div>
 
-    <button class="button" type="button">Double Jeopardy</button>
-    <div class="content_djeo">
-      <form action="{{ url_for('host_setup') }}"  method= "post">
-        {% for category in categories %}
-
-          <ul class="cat_row">
-              <ul>
-                <p>Category {{ category }}     <input type = "text" name = "c{{ category }}" /></p>
-              </ul>
-            <ul>
-              <h3>Questions</h3>
-              {% for value in double_jeopardy %}
-              <ul>
-                <p>${{ value }} <input type = "text" name = "c{{ category }}-{{ value }}" /></p>
-              </ul>
-              {% endfor %}
-            </ul>
-            <ul>
-              <h3>Answers</h3>
-              {% for value in double_jeopardy %}
-              <ul>
-                <p> <input type = "text" name = "nm{{ category }}-{{ value }}" /></p>
-              </ul>
-              {% endfor %}
-            </ul>
-          </ul>
-          <hr>
-          {% endfor %}
-
-        <p><input type = "submit" value = "Save" /></p>
-      </form>
-    </div>
-    <button class="button" type="button">Final Jeopardy</button>
-    <div class="content_fjeo">
-      <p>hello</p>
-    </div>
-    <hr>
-    <form action="{{ url_for('home') }}" method="post">
-      <input type="submit" value="submit" />
-    </form>
+    <a href="{{ url_for('upload_file') }}"><button class="button" type="button">Upload Questions</button></a>
+    
     <script>
         var coll = document.getElementsByClassName("button");
         var i;
