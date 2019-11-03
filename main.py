@@ -1,9 +1,10 @@
 import os
 import pandas as pd
+from pusher import pusher
 
 from flask import Flask, render_template, request, session, redirect, url_for, flash
 from werkzeug.utils import secure_filename
-
+import random
 
 app = Flask(__name__)
 app.secret_key = b'_5#y2L"F4Q8z\n\xec]/'
@@ -16,6 +17,15 @@ app.config['UPLOAD_FOLDER'] = UPLOAD_FOLDER
 if not os.path.exists(UPLOAD_FOLDER):
     os.mkdir(UPLOAD_FOLDER)
 
+channels_client = pusher.Pusher(
+  app_id='890364',
+  key='aa263ab8fbaa660127d0',
+  secret='77b7a10747796431774f',
+  cluster='mt1',
+  ssl=True
+)
+
+
 @app.route("/")
 def home():
     return render_template("home.html")
@@ -27,6 +37,19 @@ CSS under static
             |    |
         HOST      PLAYER
 """
+
+@app.route("/player_setup", methods=['GET', 'POST'])
+def player_setup():
+    teams = []
+    if request.method == 'POST':
+        teams.append(request.form.get('Team Name'))
+        session['teams'] = teams
+        return render_template("player_screen.html")
+    if request.method == 'GET':
+        return render_template("player_setup.html")
+
+
+
 @app.route("/host_setup", methods=['GET', 'POST'])
 def host_setup():
 
@@ -37,6 +60,8 @@ def host_setup():
     jeopardy = range(start_amount, stop_amount, increment)
     double_jeopardy = range(2*start_amount, 2*stop_amount, 2*increment)
     increments = list(range(start_amount, stop_amount, increment))
+
+
 
     if request.method == 'GET':
         return render_template("host_setup.html", categories=categories, \
@@ -63,6 +88,7 @@ def host_setup():
         session['jeopardy'] = master
         session['categories'] = category_strings
         session['increments'] = increments
+        session["daily doubles"] = [random.randint(0,6),(random.randint(1,6)*100)]
 
         return redirect(url_for('jeopardy_form_post'))
 
@@ -75,16 +101,22 @@ def jeopardy_form_post():
 @app.route("/answer_page/<category>/<value>")
 def answer_page(category, value):
     category = int(category)
-    
+
     # Pop out and update the board
     jeopardy_board = session.pop('jeopardy')
     question = jeopardy_board[category][value][0]
     answer = jeopardy_board[category][value][1]
     jeopardy_board[category][value][2] = 0
 
+    jep_vals = [category, int(value)]
+    print(jep_vals)
     session['jeopardy'] = jeopardy_board
+    print(session['daily doubles'])
 
-    return render_template("answer_page.html", question=question, answer=answer)
+    if session['daily doubles'] == jep_vals:
+        return render_template("daily_double.html", question=question, answer=answer)
+    else:
+        return render_template("answer_page.html", question=question, answer=answer)
 
 def allowed_file(filename):
     return '.' in filename and \
@@ -106,7 +138,7 @@ def upload_file():
         if file and allowed_file(file.filename):
             filename = secure_filename(file.filename)
             file.save(os.path.join(app.config['UPLOAD_FOLDER'], filename))
-            
+
             # Process the file - this need additional check and to be moved into its own function.
             ## MESSY
             questions = pd.read_csv(os.path.join(app.config['UPLOAD_FOLDER'], filename))
@@ -123,9 +155,9 @@ def upload_file():
                 category_dict = {}
                 for index, question in data.iterrows():
                     category_dict[str(question['Value'])] = [question['Question'], question['Answer'], 1]
-                
+
                 board.append(category_dict)
-            
+
             session['jeopardy'] = board
             session['categories'] = categories
             session['increments'] = increments
