@@ -9,7 +9,30 @@
   <body>
     {% block content %}
     <div class="inline">
-      <p id='timer'>Hi</p>
+      <p id='timer'>10</p>
+      <table class="score_board">
+        <tr>
+          {% for i in range(num_teams) %}
+          <th class="team_name" id=>Team {{ i+1 }}</th>
+          {% endfor %}
+        </tr>
+        <form method='post'>
+          <tr>
+            {% for i in range(num_teams) %}
+            <td><input type="submit" name="adder{{i}}" class="pointer" id='add_score{{i}}' value="+"></input></td>
+            {% endfor %}
+          </tr>
+          <tr>
+            {% for i in range(num_teams) %}
+            <td class="scores" id="score{{i}}">{{ teams['team' + i|string] }}</td>
+            {% endfor %}
+          <tr>
+            {% for i in range(num_teams) %}
+            <td><input type="submit" name="adder{{i}}" class="pointer" id='subtract_score{{i}}' value="-"></input></td>
+            {% endfor %}
+          </tr>
+        </form>
+      </table>
     </div>
     <div class="inline">
       <div class="flip-card">
@@ -28,27 +51,32 @@
     <div class="inline">
       <button class="start_button" id='a' type="button" onclick="setColor('c')">GO!</button>
     </div>
+    <a href="{{ url_for('jeopardy_form_post') }}"><button class="go_back" type="button">Return to Board</button></a>
     <script>
     var count = 1;
+    var timeleft = document.getElementById("timer").innerHTML
+    var myTimer;
+    function setTimer(){
+      document.getElementById("timer").innerHTML = timeleft - 1;
+      timeleft -= 1;
+      if(timeleft <= 0){
+        document.getElementById("timer").innerHTML = "EXPIRED";
+      }
+    }
+    var myTimer;
     function setColor(btn) {
-        var property = document.getElementById(btn);
-        if (count == 0) {
-            property.style.backgroundColor = "gray"
-            count = 1;
-        }
-        else {
-            property.style.backgroundColor = "green"
-            count = 0;
-            var timeleft = 10;
-            document.getElementById("timer").innerHTML = timeleft
-            var downloadTimer = setInterval(function(){
-              document.getElementById("timer").innerHTML = timeleft - 1;
-              timeleft -= 1;
-              if(timeleft <= 0){
-                document.getElementById("timer").innerHTML = "EXPIRED";
-              }
-        }, 1000);
-        }
+      var property = document.getElementById(btn);
+      if (count==1) {
+        myTimer = setInterval(setTimer, 1000)
+        property.style.backgroundColor = "green"
+        count = 0;
+      }
+      else {
+        property.style.backgroundColor = "gray";
+        /*document.getElementById("timer").innerHTML = timeleft;*/
+        count = 1;
+        clearInterval(myTimer);
+      }
     }
     </script>
     {% endblock %}

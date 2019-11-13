@@ -1,8 +1,8 @@
 .flip-card {
-  margin-left: 45%;
+  margin-left: 15%;
   background-color: transparent;
-  width: 600px;
-  height: 500px;
+  width: 400px;
+  height: 300px;
   border: 1px solid blue;
   perspective: 1000px; /* Remove this if you don't want the 3D effect */
 }
@@ -50,10 +50,35 @@ div.inline {
 .start_button{
     width: 100px;
     height: 100px;
-    margin-top: 200px;
-    margin-left: 350px;
+    margin-top: 150px;
+    margin-left: 250px;
 }
 p {
   text-align: center;
-  font-size: 60px; 
+  font-size: 60px;
+}
+.score_board
+{
+  margin-left: 10px;
+  width: 40%;
+  text-align: center;
+}
+.scores
+{
+  background-color: white;
+  border: 3px solid black;
+  font-size: 14px;
+  padding: 3px;
+}
+.team_name
+{
+  font-size: 14px;
+  padding: 3px;
+}
+.go_back
+{
+  margin-top: 40px;
+}
+input[type="text"] {
+    width: 40px;
 }

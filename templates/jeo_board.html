@@ -27,13 +27,13 @@
     </table>
     <table class="score_board">
       <tr>
-        {% for i in range(3) %}
-        <th class="team_name">TeamName</th>
+        {% for i in range(num_teams) %}
+        <th class="team_name">Team {{ i+1 }}</th>
         {% endfor %}
       </tr>
       <tr>
-        {% for n in range(3) %}
-        <td class="scores">Score</td>
+        {% for n in range(num_teams) %}
+        <td class="scores">{{ teams['team' + n|string] }}</td>
         {% endfor %}
     </table>
     {% endblock %}

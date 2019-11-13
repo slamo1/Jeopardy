@@ -12,7 +12,6 @@
     <div class="content_jeo">
       <form action="{{ url_for('host_setup') }}"  method= "post">
         {% for category in categories %}
-
           <ul class="cat_row">
               <ul>
                 <p>Category {{ category }}     <input type = "text" name = "c{{ category }}" /></p>

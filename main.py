@@ -88,17 +88,29 @@ def host_setup():
         session['jeopardy'] = master
         session['categories'] = category_strings
         session['increments'] = increments
+
+        return redirect(url_for('start_game'))
+#Work On this
+
+@app.route('/start_game', methods=['GET', 'POST'])
+def start_game():
+    if request.method == 'GET':
+        return render_template("startPage.html")
+    if request.method == 'POST':
         session["daily doubles"] = [random.randint(0,6),(random.randint(1,6)*100)]
-
+        session['team_number'] = int(request.form.get("team_number"))
+        session['teams'] = {}
+        for number in range(session['team_number']):
+            session['teams']["team"+str(number)] = 0
+        print(len(session['teams']))
         return redirect(url_for('jeopardy_form_post'))
-
 
 @app.route("/jeopardy_board", methods=['GET', 'POST'])
 def jeopardy_form_post():
     return render_template("jeo_board.html", categories=session['categories'], \
-            increments=session['increments'], board=session['jeopardy'])
+            increments=session['increments'], board=session['jeopardy'], num_teams=len(session['teams']), teams=session['teams'])
 
-@app.route("/answer_page/<category>/<value>")
+@app.route("/answer_page/<category>/<value>", methods=['GET', 'POST'])
 def answer_page(category, value):
     category = int(category)
 
@@ -114,13 +126,51 @@ def answer_page(category, value):
     print(session['daily doubles'])
 
     if session['daily doubles'] == jep_vals:
-        return render_template("daily_double.html", question=question, answer=answer)
+        if request.method == ('POST'):
+            add_values = []
+            change_list = []
+            for team in range(len(session['teams'])):
+                change_list.append(request.form.get("adder" + str(team)))
+                if request.form.get("wager" + str(team)):
+                    add_values.append(request.form.get("wager" + str(team)))
+                else:
+                    add_values.append(0)
+            print(add_values)
+            if "+" in change_list:
+                val = change_list.index("+")
+                print(val)
+                session['teams']['team' + str(val)] = session['teams']['team' + str(val)] + int(add_values[val])
+
+            elif "-" in change_list:
+                val = change_list.index("-")
+                print(val)
+                session['teams']['team' + str(val)] = session['teams']['team' + str(val)] - int(add_values[val])
+        return render_template("daily_double.html", question=question, answer=answer, num_teams=len(session['teams']), value=value, teams=session['teams'])
+
     else:
-        return render_template("answer_page.html", question=question, answer=answer)
+        if request.method == ('POST'):
+            change_list = []
+            for team in range(len(session['teams'])):
+                change_list.append(request.form.get("adder" + str(team)))
+
+            if "+" in change_list:
+                val = change_list.index("+")
+                print(val)
+                session['teams']['team' + str(val)] = session['teams']['team' + str(val)] + int(value)
+
+            elif "-" in change_list:
+                val = change_list.index("-")
+                print(val)
+                session['teams']['team' + str(val)] = session['teams']['team' + str(val)] - int(value)
+
+
+        return render_template("answer_page.html", question=question, answer=answer, num_teams=len(session['teams']), value=value, teams=session['teams'])
+
 
 def allowed_file(filename):
     return '.' in filename and \
            filename.rsplit('.', 1)[1].lower() in ALLOWED_EXTENSIONS
+
 
 @app.route('/upload', methods=['GET', 'POST'])
 def upload_file():
@@ -144,8 +194,6 @@ def upload_file():
             questions = pd.read_csv(os.path.join(app.config['UPLOAD_FOLDER'], filename))
             increments = list(set(questions['Value'].values.astype(str)))
             increments.sort()
-            print("HELLO")
-            print(increments)
 
             category_groups = questions.groupby(by='Category Name')
             categories = list(category_groups.groups)
@@ -162,8 +210,10 @@ def upload_file():
             session['categories'] = categories
             session['increments'] = increments
 
-            return redirect(url_for('jeopardy_form_post'))
+            return redirect(url_for('start_game'))
     return render_template("upload.html")
+
+
 
 if __name__ == "__main__":
     app.run(debug=True)
