@@ -9,6 +9,9 @@
   <body>
     {% block content %}
     <p>DAILY DOUBLE</p>
+    {% for i in range(20) %}
+    <br>
+    {% endfor %}
     <div class="inline">
       <p id='timer'>20</p>
       <table class="score_board">
@@ -45,11 +48,11 @@
         <div class="flip-card-inner">
           <div class="flip-card-front" id='c'>
             <h1>Question</h1>
-            <p>{{ question }} </p>
+            <h3>{{ question }} </h3>
           </div>
           <div class="flip-card-back">
             <h1>Answer</h1>
-            <p>{{ answer }} </p>
+            <h3>{{ answer }} </h3>
           </div>
         </div>
       </div>
