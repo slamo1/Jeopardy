@@ -19,7 +19,7 @@
           {% if board[i][value|string][2]  %}
             <td><a href="{{ url_for('answer_page', category=i, value=value)}}"><button class="jeo_button" type="button">${{value}}</button></a></td>
           {% else %}
-          <td></td>
+          <td><br><br><br></td>
           {% endif %}
         {% endfor %}
       </tr>
